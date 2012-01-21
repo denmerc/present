@@ -10,8 +10,10 @@ var relyingParty = new openid.RelyingParty (
     false, // Strict mode
     extensions); // List of extensions to enable and include
 
-exports.authenticate = function(identifier, callback) {
-	relyingParty.authenticate(identifier, false, callback);
+exports.authenticate = function(identifier, returnUrl, callback) {
+    console.log('returnUrl: ' + returnUrl);
+	relyingParty.returnUrl = returnUrl;
+    relyingParty.authenticate(identifier, false, callback);
 }
 
 exports.verifyAssertion = function(request, callback) {

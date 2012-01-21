@@ -1,8 +1,7 @@
 #!/usr/bin/node
 
 var express = require('express');
-//var relyingParty = require('./relyingParty.js');
-var relyingParty = require('./relyingPartyMock.js');
+var relyingParty = require('./relyingParty.js');
 
 var app = module.exports = express.createServer();
 
@@ -32,7 +31,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/auth', function(req, res) {
-  relyingParty.authenticate(req.body.identifier, function(error, authUrl) {
+  relyingParty.authenticate(req.body.identifier, req.headers.origin + '/verify', function(error, authUrl) {
     if (error) {
       console.log(error);
       res.render('auth', { 'error': error });
@@ -59,6 +58,6 @@ app.get('/verify', function(req, res) {
 });
 
 
-app.listen(3000);
+app.listen(process.env.PORT, '0.0.0.0');
 console.log('Express server listening on port %d in %s mode', app.address().port, app.settings.env);
 
