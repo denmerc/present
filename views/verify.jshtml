@@ -1,0 +1,2 @@
+<h1>Login Results</h1>
+<p>Authenticated: @locals.authenticated</p>

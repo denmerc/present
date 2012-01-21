@@ -1,0 +1,5 @@
+<h1>Login using OpenID</h1>
+<form method="post" action="/auth">
+	<input name="identifier" />
+	<input type="submit" value="Login" />
+</form>

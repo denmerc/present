@@ -1,0 +1,10 @@
+<html>
+<head>
+	<title>jshtml</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+	@writeBody();
+</body>
+</html>
+

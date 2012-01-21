@@ -1,0 +1,2 @@
+<h1>Auth Error</h1>
+<p>Authenticated: @locals.error</p>
