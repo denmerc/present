@@ -23,15 +23,15 @@ module.exports = function(app) {
 
 	app.get('/verify', function(req, res) {
 		relyingParty.verifyAssertion(req, function(error, result) {
-			if (result) {
+			if (result && result.authenticated) {
 				console.log(result);
-				res.render('verify', {
-					authenticated: result.authenticated
-				});
+                req.session.nickname = 'Tim';
+                console.log('Setting nickname to ' + req.session.nickname);
+				res.redirect('/chat');
 				return;
 			}
 
-			res.render('verify', {
+			res.render('index', {
 				authenticated: false
 			});
 		});

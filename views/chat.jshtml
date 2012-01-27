@@ -1,0 +1,38 @@
+<div id="cursors"></div>
+
+<ul id="messages"></ul>
+
+<input id="message" type="text" />
+<input id="send-message" type="submit" value="Send">
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var nickname = '@locals.nickname';
+    var socket = io.connect('http://present.tstrimple.c9.io/');
+    socket.on('message', function (data) {
+        $('#messages').append('<li>' + data + '</li>');
+    });
+    
+    socket.on('mouse-location', function(data) {
+        if(!$('#' + data.id).length) {
+            $('#cursors').append('<div id="' + data.id + '" style="position: absolute;">A</div>');
+        }
+        
+        $('#' + data.id).css('left', data.x);
+        $('#' + data.id).css('top', data.y);
+    });
+    
+    $('#send-message').click(function() {
+        var message = $('#message').val();
+        if(message.length > 0) {
+            message = nickname + ': ' + message;
+            $('#messages').append('<li>' + message + '</li>');
+            socket.emit('message', message);
+            $('#message').val('');
+        }
+    });
+    
+    $(document).mousemove(function(e) {
+        socket.emit('mouse-location', { x: e.pageX, y: e.pageY });
+    });
+</script>
